@@ -1,4 +1,4 @@
-/** @typedef {{genre: string, author:string, title: string, title2?:string}} DataArrType a tablazat torzset tartalmazo objektum tipusa */
+/** @typedef {{genre: string, author:string, title: string, author2?:string,  title2?:string}} DataArrType a tablazat torzset tartalmazo objektum tipusa */
 /** @type {string[]} stringeket tartalmazo tomb */
 const headerArr = ["Műfaj", "Szerző", "Mű"] 
 
@@ -42,6 +42,7 @@ const theadJs = document.createElement("thead")
 tableJs.appendChild(theadJs)
 
 const tbodyJs = document.createElement("tbody")
+tbodyJs.id = "jstbody"
 tableJs.appendChild(tbodyJs)
 
 const trFejlec = document.createElement("tr")
@@ -66,4 +67,70 @@ tableSelect.addEventListener("change", function(e){
     
 })
 
-generateFullForm(divJs)
+
+const jsForm = generateFullForm(divJs) 
+
+jsForm.addEventListener("submit", function(e){ 
+    e.preventDefault() 
+    
+    const targetSubmit = e.target 
+    const mufajInp = targetSubmit.querySelector("#elso") 
+    const szerzoInp = targetSubmit.querySelector("#masodik")
+    const muInp = targetSubmit.querySelector("#harmadik") 
+    const muMasikInp = targetSubmit.querySelector("#negyedik") 
+    
+    if(validateAllFields(mufajInp, szerzoInp, muInp, jsForm)){ 
+    const mufajValue = mufajInp.value 
+    const szerzoValue = szerzoInp.value 
+    const muValue = muInp.value 
+    const muMasikValue = muMasikInp.value 
+    
+    /**@type {DataArrType[]} objektum adatai */
+    const valueObj = {} 
+    valueObj.genre = mufajValue 
+    valueObj.author = szerzoValue 
+    valueObj.title = muValue 
+    if(muMasikValue){ 
+        valueObj.title2 = muMasikValue 
+    }
+    const tbodyJs = document.getElementById("jstbody") 
+    tableArr.push(valueObj) 
+    generateTbody(tableArr, tbodyJs) 
+    targetSubmit.reset()
+    
+}
+}) 
+
+const htmlForm = document.getElementById("htmlform") 
+htmlForm.addEventListener("submit", function(e){ 
+     e.preventDefault() 
+    const targetSubmit = e.target 
+    const mufajInp = targetSubmit.querySelector("#elso") 
+    const szerzoInp = targetSubmit.querySelector("#masodik") 
+    const muInp = targetSubmit.querySelector("#harmadik") 
+    const szerzoMasikInp = targetSubmit.querySelector("#negyedik") 
+    const muMasikInp = targetSubmit.querySelector("#otodik") 
+
+    if(validateAllFields(mufajInp, szerzoInp, muInp, htmlForm)){ 
+    
+    const mufajValue = mufajInp.value 
+    const szerzoValue = szerzoInp.value 
+    const muValue = muInp.value 
+    const szerzoMasikValue = szerzoMasikInp.value 
+    const muMasikValue = muMasikInp.value 
+
+    /**@type {DataArrType} objektum adatai */
+    const valueObj = {} 
+    valueObj.genre = mufajValue 
+    valueObj.author = szerzoValue 
+    valueObj.title = muValue 
+
+    if(szerzoMasikValue && muMasikValue){ 
+        valueObj.author2 = szerzoMasikValue 
+        valueObj.title2 = muMasikValue 
+    }
+    const tbodyHtml = document.getElementById("htmltbody")
+    generateHtmlAddRow(valueObj, tbodyHtml) 
+    targetSubmit.reset() 
+} 
+})
