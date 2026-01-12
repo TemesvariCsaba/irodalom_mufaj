@@ -44,3 +44,87 @@ function generateTbody(bodyArr, parentTbody){
         }
     }
 }
+
+/**
+ *  letrehoz egy sortorest
+ * @param {HTMLDivElement} parentDiv a div amihez hozzafuzi a sortorest 
+ * @returns {void} nincs visszateresi erteke
+ */
+function generateBr(parentDiv){ 
+    const brDiv = document.createElement("br") 
+    parentDiv.appendChild(brDiv) 
+} 
+/**
+ *  letrehozza a form egy mezojet
+ * @param {string} labelFor // a label for tulajdonsaga
+ * @param {string} labelContent // a label szovege
+ * @param {string} inputName // a label name tulajdonsaga
+ * @param {HTMLFormElement} parentForm //form amihez hozzafuzi
+ * @returns {void} nincs visszateresi erteke
+ */
+function generateInput(labelFor, labelContent, inputName, parentForm ){ 
+    const formDiv = document.createElement("div")
+    parentForm.appendChild(formDiv) 
+    const labelForm = document.createElement("label") 
+    labelForm.htmlFor = labelFor 
+    labelForm.innerText = labelContent
+    formDiv.appendChild(labelForm) 
+    generateBr(formDiv) 
+    const inputForm = document.createElement("input") 
+    inputForm.type = "text" 
+    inputForm.name = inputName 
+    inputForm.id = labelFor 
+    formDiv.appendChild(inputForm) 
+    const spanForm = document.createElement("span") 
+    spanForm.classList.add("error") 
+    formDiv.appendChild(spanForm) 
+    generateBr(formDiv) 
+}
+
+/**
+ *  letrehozza a teljes formot
+ * @param {HTMLDivElement} sectionDiv div amihez hozzafuzi
+ * @returns {HTMLFormElement} //egy form a visszateresi erteke
+ */
+function generateFullForm(sectionDiv){ 
+    
+    /** @type {{labelfor: string, content: string, name: string }[]} a tomb tartalma */
+    const formArr = [ 
+        {
+            labelfor: "elso", 
+            content: "Műfaj", 
+            name: "mufaj" 
+        },
+        {
+            labelfor: "masodik",
+            content: "Szerző", 
+            name: "szerzo" 
+        },
+        {
+            labelfor: "harmadik",
+            content: "Mű", 
+            name: "mu" 
+        },
+        {
+            labelfor: "negyedik",
+            content: "Másik mű", 
+            name: "mu2" 
+        },
+
+    ]
+    const jsForm = document.createElement("form")
+    jsForm.id = "jsform" 
+    sectionDiv.appendChild(jsForm) 
+
+    for(const element of formArr){ 
+    generateInput(element.labelfor, element.content, element.name, jsForm) 
+    }
+
+    
+    const buttonForm = document.createElement("button") 
+    buttonForm.innerText = "Hozzáadás" 
+    jsForm.appendChild(buttonForm) 
+
+    return jsForm 
+}
+

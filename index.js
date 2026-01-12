@@ -65,3 +65,5 @@ tableSelect.addEventListener("change", function(e){
     }
     
 })
+
+generateFullForm(divJs)
